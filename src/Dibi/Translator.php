@@ -291,7 +291,7 @@ final class Translator
 						if (is_array($v)) {
 							$vx[] = $this->formatValue($v, 'ex');
 						} elseif (is_string($k)) {
-							$v = (is_string($v) && strncasecmp($v, 'd', 1)) || $v > 0 ? 'ASC' : 'DESC';
+							$v = (is_string($v) ? strncasecmp($v, 'd', 1) : $v > 0) ? 'ASC' : 'DESC';
 							$vx[] = $this->identifiers->$k . ' ' . $v;
 						} else {
 							$vx[] = $this->identifiers->$v;
@@ -341,14 +341,16 @@ final class Translator
 
 				case 'sN': // string or null
 				case 'sn':
-					return $value == '' ? 'NULL' : $this->driver->escapeText((string) $value); // notice two equal signs
+					return in_array($value, ['', 0, null, false], true)
+						? 'NULL'
+						: $this->driver->escapeText((string) $value);
 
 				case 'in': // deprecated
 					trigger_error('Modifier %in is deprecated, use %iN.', E_USER_DEPRECATED);
 					// break omitted
 				case 'iN': // signed int or null
-					if ($value == '') {
-						$value = null;
+					if (in_array($value, ['', 0, null, false], true)) {
+						return 'NULL';
 					}
 					// break omitted
 				case 'i':  // signed int
