@@ -68,7 +68,11 @@ class Event
 		$rc = new \ReflectionClass('dibi');
 		$dibiDir = dirname($rc->getFileName()) . DIRECTORY_SEPARATOR;
 		foreach (debug_backtrace(false) as $row) {
-			if (isset($row['file']) && is_file($row['file']) && strpos($row['file'], $dibiDir) !== 0) {
+            if (
+                isset($row['file'])
+                && preg_match('~\.(php.?|phtml)$~', $row['file'])
+                && substr($row['file'], 0, strlen($dibiDir)) !== $dibiDir
+            ) {
 				$this->source = [$row['file'], (int) $row['line']];
 				break;
 			}
