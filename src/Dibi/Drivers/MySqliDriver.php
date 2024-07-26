@@ -103,7 +103,7 @@ class MySqliDriver implements Dibi\Driver, Dibi\ResultDriver
 					mysqli_options($this->connection, $key, $value);
 				}
 			}
-			@mysqli_real_connect($this->connection, (empty($config['persistent']) ? '' : 'p:') . $config['host'], $config['username'], $config['password'], $config['database'], $config['port'], $config['socket'], $config['flags']); // intentionally @
+			@mysqli_real_connect($this->connection, (empty($config['persistent']) ? '' : 'p:') . $config['host'], $config['username'], $config['password'], $config['database'], $config['port'], $config['socket'], $config['flags'] ?? 0); // intentionally @
 
 			if ($errno = mysqli_connect_errno()) {
 				throw new Dibi\DriverException(mysqli_connect_error(), $errno);
