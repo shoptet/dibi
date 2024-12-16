@@ -650,7 +650,7 @@ class Connection
 	 * @param  callable  function (int $count, ?float $percent): void
 	 * @return int  count of sql commands
 	 */
-	public function loadFile($file, callable $onProgress = null)
+	public function loadFile($file, ?callable $onProgress = null)
 	{
 		return Helpers::loadFromFile($this, $file, $onProgress);
 	}

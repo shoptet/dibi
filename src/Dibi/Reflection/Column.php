@@ -35,7 +35,7 @@ class Column
 	private $info;
 
 
-	public function __construct(Dibi\Reflector $reflector = null, array $info)
+	public function __construct(?Dibi\Reflector $reflector = null, array $info)
 	{
 		$this->reflector = $reflector;
 		$this->info = $info;

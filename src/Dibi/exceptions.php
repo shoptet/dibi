@@ -23,7 +23,7 @@ class Exception extends \Exception
 	 * @param  string  SQL command
 	 * @param  \Exception
 	 */
-	public function __construct($message = '', $code = 0, $sql = null, \Exception $previous = null)
+	public function __construct($message = '', $code = 0, $sql = null, ?\Exception $previous = null)
 	{
 		parent::__construct($message, 0, $previous);
 		$this->code = $code;
